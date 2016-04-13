@@ -28,6 +28,8 @@
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
     <script src="js/controller/CardsController.js"></script>
+    <script src="js/controller/DropdownController.js"></script>
+    <script src="js/controller/CreateTaskController.js"></script>
 
     <!--Application JS files-->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -49,32 +51,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Kanban</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
         </div>
       </div>
     </nav>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+      <div ng-controller="DropdownContoller">
+        <div class="col-sm-3 col-md-2 sidebar" >
+
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Boards</a></li>
+            <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Boards
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li ng-repeat="name in boardNames"><a href="" ng-click="setBoard(name)">{{name}}</a></li>
+            </ul>
+          </div>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Profile</a></li>
-            <li><a href="">Nav item again</a></li>
+
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#createTask">Create Task</button>
           </ul>
         </div>
         <!--todo- factor out the card divs into Angular templates
@@ -84,42 +83,69 @@
           for ng-click but for the drag/drop actions (That would be dumb if there
           isn't but you never know )
         -->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Kanban Board</h1>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"  ng-controller="CreateTaskController" >
+          <h1 class="page-header" ng-model="name">{{name}}</h1>
 
           <div class="row placeholders" id="board" >
             <div class="col-xs-6 col-sm-3 placeholder">
               <h2>To Do</h2>
               <div id="todo" class="section droppable" border-style:solid drag-and-drop>
-                  <div id="c3" class="card draggable "><em>Card 3</em></div>
+
+                  <div ng-repeat="to in todo" id={{to}} class="card draggable" draggable="true"><em>{{to}}</em></div>
               </div>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
               <h2>Doing</h2>
               <div id="doing" class="section droppable" border-style:solid drag-and-drop>
                   <!--ng-ondrop?-->
-                  <div id="c2" class="card draggable "><em>Card 2</em></div>
+                  <div ng-repeat="do in doing" id={{do}} class="card draggable" draggable="true"><em>{{do}}</em></div>
               </div>
             </div>
             <div class="col-xs-6 col-sm-3 placeholder">
              <h2>Done</h2>
               <div id="done" class="section droppable" border-style:solid drag-and-drop>
-                  <div id="c1" class="card draggable ">Card 1</div>
+                  <div ng-repeat="don in done" id={{don}} class="card draggable" draggable="true"><em>{{don}}</em></div>
               </div>
             </div>
           </div>
+                  <!-- Modal -->
+          <div id="createTask" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create Task</h4>
+              </div>
+              <div class="modal-body">
+                <div class="loginInput">
+                    <input id="name" placeholder="Name" class="input" ng-model="taskName">
+                  </div>
+                  <div class="loginInput">
+                    <input id="Description" placeholder="Description" class="input" ng-model="description">
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="createTask(name,taskName, description)">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
           </div>
+          </div>
+          </div>
+
         </div>
       </div>
     </div>
     </div>
-<div ng-sparkline></div>
-
-    <script src="js/directives/dragAndDropDirective.js"></script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/directives/dragAndDropDirective.js"></script>
 
-      </body>
+    </body>
+
 </html>
