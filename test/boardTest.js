@@ -37,6 +37,7 @@ describe('Board', function() {
 	        }
 	    ]
 	})
+	
   	before(function() {
   		testRepo.setup()
 		board = new Board();
@@ -104,6 +105,49 @@ describe('Board', function() {
 			expect(board.author).to.equal(updateBoard.get("author"))
 			//now we need to check to see if value was updated 
 			done()
+		})
+	});
+	it('test createBoard', function(done) {
+		var rand =  Math.floor((Math.random() * 100000) + 1);
+		var name = "CreatedBoard" + rand;
+		var createBoard = new Board({
+			"name" : name,
+			"author" : "UnitTestForCreate",
+			"createdTime" : new Date(),
+			"done" : [ 
+			    {
+			        "name" : "nulasdfl",
+			        "description" : "nuwertll",
+			        "creationDate" : new Date(),
+			        "_id" : "570a9826cc44f79c27024f85"
+			    }
+			],
+			"doing" : [ 
+			    {
+			        "name" : "nasdfull",
+			        "description" : "nuwretll",
+			        "creationDate" : new Date(),
+			        "_id" : "570a9826cc44f79c27024f86"
+			    }
+			],
+			"todo" : [ 
+			    {
+			        "name" : "nuasdll",
+			        "description" : "nusdfgll",
+			        "creationDate" : new Date(),
+			        "_id" : "570a9826cc44f79c27024f87"
+			    }
+			]
+		});
+		createBoard.save(function(board){
+			//i know this isn't "unit" testing 
+			//but we have a db connection anyway so whatever
+			//let's query for the event and confirm it exists
+			new Board().findByBoardName(name, function(board){
+				expect(board).to.be.ok;
+				expect(board).length.to.be.above(0);
+				done()
+			});
 		})
 	});
 });
