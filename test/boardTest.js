@@ -14,7 +14,7 @@ describe('Board', function() {
 	    "createdTime" : new Date(),
 	    "done" : [ 
 	        {
-	            "name" : "nulasdfl",
+	            "name" : "card1",
 	            "description" : "nuwertll",
 	            "creationDate" : new Date(),
 	            "_id" : "570a9826cc44f79c27024f85"
@@ -22,7 +22,7 @@ describe('Board', function() {
 	    ],
 	    "doing" : [ 
 	        {
-	            "name" : "nasdfull",
+	            "name" : "card2",
 	            "description" : "nuwretll",
 	            "creationDate" : new Date(),
 	            "_id" : "570a9826cc44f79c27024f86"
@@ -30,7 +30,7 @@ describe('Board', function() {
 	    ],
 	    "todo" : [ 
 	        {
-	            "name" : "nuasdll",
+	            "name" : "card3",
 	            "description" : "nusdfgll",
 	            "creationDate" : new Date(),
 	            "_id" : "570a9826cc44f79c27024f87"
@@ -49,7 +49,7 @@ describe('Board', function() {
   	});
 
 	it('make sure board connects', function(done) {
-		board.findAll(function(boards){
+		board.findAllNames(function(boards){
 			expect(boards.length).to.be.above(0)
 			done()
 		});
@@ -103,6 +103,26 @@ describe('Board', function() {
 		updateBoard.set("author", updateBoard.get("author") + rand)
 		updateBoard.update(function(board){
 			expect(board.author).to.equal(updateBoard.get("author"))
+			//now we need to check to see if value was updated 
+			done()
+		})
+	});
+	it('test move card update', function(done) {
+		//Let's make sure the card is where we except in todo
+		//should only have one
+		expect(updateBoard.data.todo[0].name).to.be.equal("card3")
+		//okay now let's add it to doing
+		var task = updateBoard.get("todo")[0];
+		//remove from list
+		var taskIndex = updateBoard.get("todo").indexOf(task);
+		//now remove it
+		updateBoard.get("todo").splice(taskIndex, 1);
+		//now add to doing
+		updateBoard.get("doing").push(task);
+		expect(updateBoard.data.doing.length).to.be.equal(2)
+		updateBoard.update(function(board){
+			expect(board.author).to.equal(updateBoard.get("author"))
+			expect(updateBoard.data.doing.length).to.be.equal(2)
 			//now we need to check to see if value was updated 
 			done()
 		})
