@@ -11,18 +11,11 @@
         //also why do we need this?  Original implementation had
         //this spelled wrong anway....
         var lastEntered;
-       var cards = document.querySelectorAll('.card');
-        for (var i = 0, n = cards.length; i < n; i++) {
-            var card = cards[i];
-            card.draggable = true;
-        };
         var board = document.getElementById('board');
         $scope.onselectstart = function() {
-            console.log("test")
             event.preventDefault();
         }
         $scope.ondragstart = function() {
-            console.log('dragstart');
             hideMe = event.target;
             event.dataTransfer.setData('card', event.target.id);
             event.dataTransfer.effectAllowed = 'move';
@@ -31,7 +24,6 @@
             e.target.style.visibility = 'visible';
         };
         $scope.ondragenter = function(e) {
-            console.log('dragenter');
             if (hideMe) {
                 hideMe.style.visibility = 'hidden';
                 hideMe = null;
@@ -94,6 +86,7 @@
             }
             return null;
         }
+
     };
 
     angularApp.controller("CardsController", ["$scope","$http",CardsController])
