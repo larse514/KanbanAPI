@@ -22,16 +22,15 @@ board.prototype.get = function (name){
 //probably refactor these into db class
 //db methods
 board.prototype.findById = function (id, next){
-
 	boardRepository.findById(id, function(err, board) {
 		if (err) throw err;
 		// show the one board
 		next(board)
 	});
 };
-board.prototype.findAll = function(next){
+board.prototype.findAllNames = function(next){
 	// get all the boards
-	boardRepository.find({}, function(err, boards) {
+	boardRepository.find({},{name:1, _id:0}, function(err, boards) {
 		if (err) throw err;
 		// object of all the boards
 		next(boards)
