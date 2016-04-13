@@ -4,7 +4,7 @@ var httpHelper = require('../util/httpHelper.js');
 
 
 var boards = {
-	getAll: function(req, res){
+	getAllNames: function(req, res){
 		new Board().findAllNames(function(Board){
 			res.json(Board);
 		})

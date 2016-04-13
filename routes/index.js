@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/getBoards', boards.getAll);
+router.get('/getBoards', boards.getAllNames);
 router.get('/getByName', boards.getByName);
 router.post('/createBoard', boards.create);
 router.post('/updateBoard', boards.update);
