@@ -1,13 +1,13 @@
 //schema.js
 schemas = {
 	board: {
-		_id : null,
-		name : null,
-		author: null,
-		createdTime: null,
-		todo: [{name:null, description:null, creationDate:null}],
-		doing: [{name:null, description:null, creationDate:null}],
-		done: [{name:null, description:null, creationDate:null}]
+		_id : String,
+		name : String,
+		author: String,
+		createdTime: Date,
+		todo: [{name:String, description:String, creationDate:Date}],
+		doing: [{name:String, description:String, creationDate:Date}],
+		done: [{name:String, description:String, creationDate:Date}]
 	}
 }
 
