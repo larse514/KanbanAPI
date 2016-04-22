@@ -59,10 +59,7 @@ board.prototype.save = function (next){
 };
 board.prototype.update = function(next){
 
-	var id = this.data._id;
-	console.log(mongoose.Types.ObjectId.isValid(id));
-
-	console.log(id.toString())
+	var id = this.data.id;
 	boardRepository.findByIdAndUpdate(id, this.data,{upsert: true, new:true}, function(err, board){
 		if (err) throw err;
 		//this returns the object in mongo object in db before update?

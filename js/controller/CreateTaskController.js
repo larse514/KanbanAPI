@@ -4,8 +4,8 @@
 (function()
 {
     var angularApp = angular.module("KANBAN");
-    var CreateTaskController = function ($scope, $http) {
-
+    var CreateTaskController = function ($scope, $http, TaskService) {
+		console.log(TaskService)
 		function onSuccess(response){
 			
 		}
@@ -13,14 +13,15 @@
 			
 		}
 		$scope.createTask =function(name, taskName, description){
+			var data = TaskService.getData();
 			 $http.post(
                 'http://localhost:3000/updateBoard',
                 {
-                    userName: taskName, password: description
+                    data
                 }
             ).then(onSuccess, onError)
 		}
 
     }
-    angularApp.controller("CreateTaskController", ["$scope","$http",CreateTaskController])
+    angularApp.controller("CreateTaskController", ["$scope","$http","TaskService", CreateTaskController])
 }());

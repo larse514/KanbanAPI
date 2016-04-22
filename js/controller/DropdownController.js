@@ -4,7 +4,7 @@
 (function()
 {
     var angularApp = angular.module("KANBAN", []);
-    var DropdownContoller = function ($scope, $http) {
+    var DropdownContoller = function ($scope, $http, TaskService) {
     	$scope.name = "Kanban Board"
     	$scope.boardNames=[];
     	$scope.todo=[];
@@ -60,10 +60,11 @@
 			done.forEach(function(val, index){
 				$scope.done.push(val.name)
 			})
+			TaskService.setData(board)
     	}
 
     	getNames();
 
     }
-    angularApp.controller("DropdownContoller", ["$scope","$http",DropdownContoller])
+    angularApp.controller("DropdownContoller", ["$scope","$http", "TaskService",DropdownContoller])
 }());

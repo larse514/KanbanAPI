@@ -1,11 +1,10 @@
 (function()
 {
     var angularApp = angular.module("KANBAN");
-
-	angularApp.factory('taskService', function ($rootScope) {
+	var TaskService = function ($rootScope) {
 	    var taskService = {};
-
-	    taskService.fetchBoard(name){
+	    var data = {};
+	    var fetchBoard = function(name){
 	   		$http({
     			method: 'GET',
   				url: 'http://localhost:3000/getByName',
@@ -19,6 +18,19 @@
 			    	alert("failed request with error" + response);
 			  });
 	    }
+	    var setData = function (data){
+	    	this.data = data;
+	    }
+	    var getData = function(){
+	    	return this.data;
+	    }
+	    return{
+	    	fetchBoard:fetchBoard,
+	    	setData:setData,
+	    	getData:getData
+
+	    }
     }
+    angularApp.factory("TaskService", ["$rootScope",TaskService])
 
 }());

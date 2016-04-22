@@ -37,21 +37,18 @@ var boards = {
 		}
 		//if the Board is valid then save it
 		board.save(function(Board){
-			console.log("Successfully created Board" + Board.BoardName)
 			httpHelper.ok(res)
 			console.log(res.body)
 		});
 	},
 	update: function(req, res){
-		console.log(req.body)
 		var board = new Board(req.body);
 		if(!board.isValid()){
 			httpHelper.badRequest(res)
 			return;
 		}
-		console.log(board.data)
 		board.update(function(updateBoard){
-			res.json(Board)
+			httpHelper.ok(res)
 		});
 	}
 };
