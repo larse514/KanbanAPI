@@ -2,6 +2,7 @@
 var schemas = require('./schema/schema.js');
 var _ = require('lodash');
 var boardRepository = require('./boardRepository.js');
+var mongoose = require('mongoose');
 
 //Define "constructor"
 var board = function(data){
@@ -19,6 +20,14 @@ board.prototype.get = function (name){
 	return this.data[name];
 };
 
+board.prototype.findBoardNames = function(next){
+	// get all the boards
+	boardRepository.find({},{name:1}, function(err, boards) {
+		if (err) throw err;
+		// object of all the boards
+		next(boards)
+	});
+};
 //probably refactor these into db class
 //db methods
 board.prototype.findById = function (id, next){
@@ -26,14 +35,6 @@ board.prototype.findById = function (id, next){
 		if (err) throw err;
 		// show the one board
 		next(board)
-	});
-};
-board.prototype.findAllNames = function(next){
-	// get all the boards
-	boardRepository.find({},{name:1, _id:0}, function(err, boards) {
-		if (err) throw err;
-		// object of all the boards
-		next(boards)
 	});
 };
 board.prototype.findByBoardName = function(name, next){
@@ -50,13 +51,19 @@ board.prototype.save = function (next){
 	if(!newboard.createdTime){
 		newboard.createdTime = new Date();
 	}
-	newboard.save(function(err) {
+	console.log(newboard)
+	newboard.save(function(err, board) {
 		if (err) throw err;
-		next();
+		next(board);
 	});
 };
 board.prototype.update = function(next){
-	boardRepository.findByIdAndUpdate(this.data._id, this.data,{upsert: true, new:true}, function(err, board){
+
+	var id = this.data._id;
+	console.log(mongoose.Types.ObjectId.isValid(id));
+
+	console.log(id.toString())
+	boardRepository.findByIdAndUpdate(id, this.data,{upsert: true, new:true}, function(err, board){
 		if (err) throw err;
 		//this returns the object in mongo object in db before update?
 		next(board)

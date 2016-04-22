@@ -4,8 +4,14 @@ var httpHelper = require('../util/httpHelper.js');
 
 
 var boards = {
+	getById: function(req, res){
+		var id = req.query;
+		new Board().findById(id, function(returnedBoard){
+			res.json(returnedBoard);
+		})
+	},
 	getAllNames: function(req, res){
-		new Board().findAllNames(function(Board){
+		new Board().findBoardNames(function(Board){
 			res.json(Board);
 		})
 	},
@@ -21,27 +27,30 @@ var boards = {
 		})
 	},
 	create: function(req, res){
-		var Board = new Board(req.body);
+		console.log(req.body)
+		var board = new Board(req.body);
 		//need to make sure 
-		if(!Board.isValid()){
+		if(!board.isValid()){
 			console.log("invalid Board parameters");
 			httpHelper.badRequest(res);
 			return;
 		}
 		//if the Board is valid then save it
-		Board.save(function(Board){
+		board.save(function(Board){
 			console.log("Successfully created Board" + Board.BoardName)
 			httpHelper.ok(res)
 			console.log(res.body)
 		});
 	},
 	update: function(req, res){
-		var Board = new Board(req.body);
-		if(!Board.isValid()){
+		console.log(req.body)
+		var board = new Board(req.body);
+		if(!board.isValid()){
 			httpHelper.badRequest(res)
 			return;
 		}
-		Board.update(function(updateBoard){
+		console.log(board.data)
+		board.update(function(updateBoard){
 			res.json(Board)
 		});
 	}

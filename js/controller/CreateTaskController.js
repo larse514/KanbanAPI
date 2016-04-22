@@ -16,7 +16,7 @@
 			 $http.post(
                 'http://localhost:3000/updateBoard',
                 {
-                    userName: userName, password: password
+                    userName: taskName, password: description
                 }
             ).then(onSuccess, onError)
 		}

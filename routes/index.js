@@ -6,9 +6,10 @@ var path = require('path')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  //res.render('index', { title: 'Express' });
   res.sendFile(path.join('/index.html'))
 });
+
+router.get('/getById', boards.getById);
 
 router.get('/getBoards', boards.getAllNames);
 router.get('/getByName', boards.getByName);

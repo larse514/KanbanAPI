@@ -25,17 +25,11 @@ app.directive('dragAndDrop', function() {
             });
           });
         board.ondragstart = function(e) {
-            console.log('dragstart');
             hideMe = e.target;
             e.dataTransfer.setData('card', e.target.id);
             e.dataTransfer.effectAllowed = 'move';
         };
-          elem.bind('drop', function(e, ui) {
-            // Removing everything other than .stopPropagation()
-            // and .preventDefault() without any luck
-            
-            //var droppedFiles = e.dataTransfer.files;
-            alert(' about to drop!');
+        elem.bind('drop', function(e, ui) {
             var section = closestWithClass(e.target, 'section');
             var id = e.originalEvent.dataTransfer.getData('card')
             if (id) {
@@ -50,13 +44,6 @@ app.directive('dragAndDrop', function() {
                 }
             }
             e.preventDefault();
-
-            
-            //if (droppedFiles.length > 0) {
-            //  for (var i=0,ii=droppedFiles.length;i<ii;i++) {
-            //    $scope.files.push(droppedFiles[i]);
-            //  }
-            //}
           });
         }
       };
@@ -72,22 +59,3 @@ function closestWithClass(target, className) {
     }
     return null;
 }
-
-/*
-$('.card').draggable({
-        appendTo: '.dropArea',
-        helper: 'clone',
-        start: function (event, ui) {
-            $(this).hide();
-        },
-        stop: function (event, ui) {
-            $(this).show();
-        }
-    });
-
-     $('.section').droppable({
-        accept: '.draggyThing',
-        drop: function (event, ui) {
-            $('.section').append(ui.draggable);
-        }
-    });*/

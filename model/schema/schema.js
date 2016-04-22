@@ -1,7 +1,11 @@
 //schema.js
+var mongoose = require('mongoose');
+
+var Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
+
 schemas = {
 	board: {
-		_id : String,
 		name : String,
 		author: String,
 		createdTime: Date,

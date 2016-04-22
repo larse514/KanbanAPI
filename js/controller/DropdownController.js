@@ -3,7 +3,7 @@
  */
 (function()
 {
-    var angularApp = angular.module("KANBAN");
+    var angularApp = angular.module("KANBAN", []);
     var DropdownContoller = function ($scope, $http) {
     	$scope.name = "Kanban Board"
     	$scope.boardNames=[];
