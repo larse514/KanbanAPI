@@ -6,6 +6,7 @@ var Schema = mongoose.Schema,
 
 schemas = {
 	board: {
+		id: String,
 		name : String,
 		author: String,
 		createdTime: Date,
